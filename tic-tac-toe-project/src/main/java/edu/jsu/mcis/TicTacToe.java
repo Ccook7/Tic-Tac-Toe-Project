@@ -92,12 +92,23 @@ public class TicTacToe {
 		TicTacToe model = new TicTacToe();
 		TicTacToe.Result r = model.getResult();
 		while(r == TicTacToe.Result.NONE){
-			System.out.println(model.toString());
-			System.out.println("Enter a coordinare to move: ");
-			int row = keyboard.nextInt();
-			int col = keyboard.nextInt();
-			model.setMark(row,col);
-			r = model.getResult();
+			int row = 0;
+			int col = 0;
+			while(col == 0 || row == 0){
+				System.out.println(model.toString());
+				System.out.println("Enter the row and column to move: ");
+				int temp = keyboard.nextInt();
+				if(row == 0){
+					if(temp >= 0 || temp < 3) row = temp;
+					else System.out.println("Please enter a valid number for row");
+				}
+				else{
+					if(temp >= 0 || temp < 3) col = temp;
+					else System.out.println("Please enter a valid number for row");
+				}
+			}
+				model.setMark(row,col);
+				r = model.getResult();
 			
 		}
 		if(r == TicTacToe.Result.XWIN) System.out.println("X Wins!");
