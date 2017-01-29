@@ -89,7 +89,7 @@ public class TicTacToe {
 	}
 	
 	public static void main(String[] args) {
-		TicTacToe model = new TicTacToe();
+		/*TicTacToe model = new TicTacToe();
 		TicTacToe.Result r = model.getResult();
 		while(r == TicTacToe.Result.NONE){
 			int row = 0;
@@ -114,5 +114,6 @@ public class TicTacToe {
 		if(r == TicTacToe.Result.XWIN) System.out.println("X Wins!");
 		else if(r == TicTacToe.Result.OWIN) System.out.println("O Wins!");
 		else System.out.println("The game is a tie!");
+		*/
 	}
 }
