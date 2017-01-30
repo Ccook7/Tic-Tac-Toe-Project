@@ -8,6 +8,7 @@ public class TicTacToeGui extends JPanel implements ActionListener {
 	private TicTacToe game;
 	private JButton[][] grid;
 	private JOptionPane gameover;
+	private JLabel resultLabel;
 	
 	public TicTacToeGui() {
 		game = new TicTacToe();
@@ -17,8 +18,12 @@ public class TicTacToeGui extends JPanel implements ActionListener {
 			for(int j = 0; j < 0; j++){
 				grid[i][j] =  new JButton();
 				grid[i][j].setName("Location" + i + j );
+				add(grid[i][j]);
 			}
 		}
+		resultLabel = new JLabel(0
+		resultLabel.setName("ResultLabel");
+		add(resultLabel);
 	}
 	
 	
@@ -38,7 +43,7 @@ public class TicTacToeGui extends JPanel implements ActionListener {
 		
 		
 		if(r.equals(TicTacToe.Result.XWIN)) {
-			//JOptionPane.showMessageDialog(frame,"Eggs are not supposed to be green.");
+			resultLabel.setText("X WINS!");
 		}
 		grid[row][col].setEnabled(false);
 	}
