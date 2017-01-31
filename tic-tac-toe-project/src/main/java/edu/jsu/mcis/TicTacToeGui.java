@@ -1,51 +1,88 @@
 package edu.jsu.mcis;
 
+import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class TicTacToeGui extends JPanel implements ActionListener {
+public class TicTacToeGui extends JFrame implements ActionListener {
 	
+	private JTextField myTitle;
 	private TicTacToe game;
 	private JButton[][] grid;
-	private JOptionPane gameover;
 	private JLabel resultLabel;
 	
 	public TicTacToeGui() {
+		myTitle = new JTextField("Tic Tac Toe");  
+		myTitle.setBounds(80, 40, 225, 20);
+		add(myTitle);
+		this.setTitle(myTitle.getText());
 		game = new TicTacToe();
-		gameover = new JOptionPane();
 		grid = new JButton[3][3];
-		for(int i = 0; i < 0; i++){
-			for(int j = 0; j < 0; j++){
+		
+		setLayout(new BorderLayout());
+        JPanel gamePanel = new JPanel();
+        gamePanel.setLayout(new GridLayout(3, 3));
+		
+		for(int i = 0; i < 3; i++){
+			for(int j = 0; j < 3; j++){
 				grid[i][j] =  new JButton();
 				grid[i][j].setName("Location" + i + j );
-				add(grid[i][j]);
+				grid[i][j].addActionListener(this);
+				gamePanel.add(grid[i][j]);
 			}
 		}
-		resultLabel = new JLabel(0
+		add(gamePanel, BorderLayout.CENTER);
+		
+		resultLabel = new JLabel("Results: ");
 		resultLabel.setName("ResultLabel");
-		add(resultLabel);
+		add(resultLabel, BorderLayout.SOUTH);
 	}
 	
 	
 	public void actionPerformed(ActionEvent event) {
-		String cord = event.getActionCommand();
-		int row = (cord.charAt(cord.length()-1)- '0');
-		int col = (cord.charAt(cord.length()-2) - '0');
+		JButton temp = (JButton) event.getSource();
+		String cord = temp.getName();
+		
+		int row = Character.getNumericValue(cord.charAt(cord.length() - 2));
+		int col = Character.getNumericValue(cord.charAt(cord.length() - 1));
+		
 		game.setMark(row,col);
 		TicTacToe.Mark m = game.getMark(row,col);
-		if(m == TicTacToe.Mark.X){
+		
+		if(m.equals(TicTacToe.Mark.X)){
 			grid[row][col].setText("X");
 		}
-		else if(m == TicTacToe.Mark.O){
+		else if(m.equals(TicTacToe.Mark.O)){
 			grid[row][col].setText("O");
 		}
 		TicTacToe.Result r = game.getResult();
 		
 		
 		if(r.equals(TicTacToe.Result.XWIN)) {
-			resultLabel.setText("X WINS!");
+			resultLabel.setText("X");
+			for(int i = 0; i < 3; i++){
+				for(int j = 0; j < 3; j++){
+					grid[i][j].setEnabled(false);
+				
+				}
+			}
 		}
+		else if(r.equals(TicTacToe.Result.OWIN)) {
+			resultLabel.setText("O");
+			for(int i = 0; i < 3; i++){
+				for(int j = 0; j < 3; j++){
+					grid[i][j].setEnabled(false);
+				
+				}
+			}
+		}
+		else if(r.equals(TicTacToe.Result.CAT)) {
+			resultLabel.setText("TIE");
+		}
+		else resultLabel.setText("No current winner");
 		grid[row][col].setEnabled(false);
+		
+		
 	}
 	
 	
@@ -53,9 +90,18 @@ public class TicTacToeGui extends JPanel implements ActionListener {
 	
 	
 	public void clickButton(int row, int col) {grid[row][col].doClick(); }
-	public TicTacToe.Mark getButton(int row, int col) { return game.getMark(row,col); }
+	public String getButtonMark(int row, int col) { return grid[row][col].getText(); }
 	public String getButtonName(int row, int col) { return grid[row][col].getName(); }
+	public String getResultLabelText() { return resultLabel.getText(); }
 	
 	
 
+
+public static void main(String[] args) {
+        TicTacToeGui game = new TicTacToeGui();
+        game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        game.setSize(400,300);
+        game.setVisible(true);
+    }
+	
 }

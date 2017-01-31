@@ -12,12 +12,12 @@ Mark Location   [Arguments]     ${row}      ${col}
 
 Check Location  [Arguments]     ${row}  ${col}  ${mark}
     ${component}=   Catenate    SEPARATOR=  Location    ${row}  ${col}
-    $(text)=   Get Button Text  ${component}
+		${text}=    Get Button Text  ${component}
 	Should be Equal     ${text}   ${mark}
     
 Winner Should Be    [Arguments]     ${winner}
-    ${text}=     Get Label Content    ResultLabel
-    Should be Equal $(text)  $(winner)
+		${text}=     Get Label Content    ResultLabel
+    Should be Equal   ${text}  ${winner}
     Close Window    Tic Tac Toe
     
     
